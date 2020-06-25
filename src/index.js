@@ -15,3 +15,12 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// TODO: replace it with React!
+const searchEl = document.querySelector('[data-id=search-expander]');
+const searchFormEl = document.querySelector('[data-id=search-form]');
+searchEl.addEventListener('click', () => {
+    searchFormEl.classList.toggle('invisible');
+    searchFormEl.querySelector('input').focus();
+});
+
