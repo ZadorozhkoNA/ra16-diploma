@@ -46,15 +46,6 @@ export default function ProductInfo({match}) {
         return srcImg;
     }
 
-    //Выбор размера и смена класса
-    const handleSelectSize = (event) => {
-        event.preventDefault();
-        setSize(event.currentTarget.textContent);
-        const arraySize = Array.from(event.currentTarget.parentElement.children)
-        arraySize.map( item => item.classList.remove('selected'));
-        event.currentTarget.classList.add('selected');
-    }
-
     //Загрузка доступных размеров товара
     const productSizes = (info) => {
         let sizesArray = [];
@@ -81,8 +72,6 @@ export default function ProductInfo({match}) {
             size: size,
         });
     }, [data, size, count]);
-
-
 
     return (       
         <section className="catalog-item">
@@ -126,13 +115,15 @@ export default function ProductInfo({match}) {
                             </table>
                             <div className="text-center">
                                 <p>Размеры в наличии: 
-                                    {sizesArray.map(item => <span 
-                                        key={nanoid()} 
-                                        // ref={element}
-                                        onClick={handleSelectSize}
-                                        className="catalog-item-size">
+                                    {sizesArray.map(item => 
+                                        <span 
+                                            key={nanoid()} 
+                                            onClick={() => setSize(item.size)}
+                                            className={"catalog-item-size " + (size === item.size ? "selected" : "")}
+                                        >
                                             {item.size}
-                                        </span>)}                           
+                                        </span>
+                                    )}
                                 </p>
                                     {<CountOrder plus={handleCountPlus} minus={handleCountMinus} count={count} />} {/* Кнопки изменения кол-ва товара */}
                             </div>
@@ -142,13 +133,12 @@ export default function ProductInfo({match}) {
                                     onClick={()=>addUnit.handleUnits(unit)}
                                     className='btn btn-danger btn-block btn-lg'>
                                         В корзину
-                                    </button>
+                                </button>
                             </Link>
                         </div>
                     </div> 
                 </>
             )}
-      
         </section>
     )
 }
